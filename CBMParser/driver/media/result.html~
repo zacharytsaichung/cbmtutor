@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Tutoring</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+</head>
+<body>
+	<div class="container">
+	  <h3>Reading Tutor</h3>
+	  <ul class="nav nav-pills">
+		<li><a href="/">Text Input</a></li>
+		<li class="active"><a href="#">Result</a></li>
+	  </ul>
+	</div>
+	<div class="container">
+	<div class="panel-group">
+	  <div class="panel panel-default">
+		<div class="panel-heading">Parsed Text</div>
+		<div class="panel-body">
+			<div id="ParsedString" class="well well-sm">
+			</div>
+		</div>
+	  </div>
+	</div>
+	</div>
+
+	<div class="container">
+		<div class="panel-group">
+		  <div class="panel panel-info">
+			<div class="panel-heading">Feedback</div>
+			<div id="feedback" class="panel-body">
+			</div>
+		  </div>
+		</div>
+	</div>
+</body>
+
+<script>
+function Feedback(json_response){
+	$("#feedback").html(json_response.msg);
+	if (json_response.IsCorrect == 1){
+		$('#input'.concat(json_response.pk)).removeClass('label-warning').addClass('label-success')
+		//$('a[data-pk="'+json_response.pk+'"').editable('toggleDisabled');
+	}
+}
+$("a#vb").each(function(){
+    $(this).editable({
+	title: 'Rewrite the verb',
+	params: function(params) {
+            var data = {};
+            data['pk'] = params.pk;
+            data['value'] = params.value;
+            data['mode'] = ModeSetEditable;
+	    data['sid'] = SessionId;
+            return JSON.stringify(data);
+	},
+	ajaxOptions: {
+		contentType: 'application/json',
+    		dataType: 'json'
+	},
+	success: function(response, newValue) {
+		json_response = JSON.parse(response);
+		Feedback(json_response);
+	}
+    });
+});
+</script>
+</html>

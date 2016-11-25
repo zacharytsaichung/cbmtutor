@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Keigo Reading Tutor</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+</head>
+<body>
+	<div class="container">
+	  <h3>Reading Tutor</h3>
+	  <ul class="nav nav-pills">
+	  <li class="active"><a href="#">Text Input</a></li>
+	  </ul>
+	</div>
+	<div class="container">
+		<form method="get" action="ParseInput">
+			<div class="form-group">
+				  <label for="ModeSel">Select Mode:</label>
+				  <select name="ModeSet" class="form-control" id="ModeSel">
+				    <option>Keigo to Regular</option>
+				    <option>Regular to Keigo</option>
+				  </select>
+				<label for="TextInput">Keigo Text:</label>
+				<textarea name="KeigoString" class="form-control" rows="5" id="TextInput" style="resize:none"></textarea>
+			</div>
+			<button type="submit" class="btn btn-default center-block">Submit</button>
+		</form>
+	</div>
+</body>
+
+<script>
+$(document).ready(function() {
+$('button[type="submit"]').attr('disabled', true);
+$('input[type="text"],textarea').on('keyup',function() {
+    var textarea_value = $("#TextInput").val();
+    var text_value = $('input[name="textField"]').val();
+    if(textarea_value != '' && text_value != '') {
+        $('button[type="submit"]').attr('disabled' , false);
+		$('button[type="submit"]').attr('class' , 'btn btn-success center-block');
+    }else{
+        $('button[type="submit"]').attr('disabled' , true);
+		$('button[type="submit"]').attr('class' , 'btn btn-default center-block');
+    }
+});
+
+});
+</script>
+</html>
